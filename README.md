@@ -3,7 +3,7 @@
 ##  Backend
 1. **Crear el entorno virtual** dentro de la carpeta `entornos`:
    ```sh
-   python -m venv entornos/.venv
+   python -m venv .venv
    ```
 2. **Activar el entorno virtual**:
    - En Windows:
