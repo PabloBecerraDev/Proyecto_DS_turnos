@@ -1,7 +1,7 @@
 #  Instrucciones de Configuración
 
 ##  Backend
-1. **Crear el entorno virtual** dentro de la carpeta `entornos`:
+1. **Crear el entorno virtual** dentro de la carpeta `entornos` (esta carpeta debe de estar en la raiz de la carpeta de backend):
    ```sh
    python -m venv .venv
    ```
