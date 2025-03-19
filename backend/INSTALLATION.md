@@ -48,11 +48,7 @@ In the settings.py file, configure the database you want to use (SQLite is the d
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'Pp31415926535pP@',
-        'HOST': 'db.baoxyiiwcbghqjiyiygt.supabase.co',
-        'PORT': '5432',
+        'NAME': BASE_DIR / 'db.postgresql'
     }
 }
 ```
