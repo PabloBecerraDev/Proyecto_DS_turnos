@@ -29,7 +29,7 @@ with open(SECRET_FILE) as f:
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secrets["SECRET_KEY"]
+# SECRET_KEY = secrets["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -45,7 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.users',
+    'apps.usuario',
+    'apps.puntoAcceso',
+    'apps.rol',
+    'apps.ticket',
+    'apps.usuarioPuntoAcceso',
+    'apps.usuarioTrabajador',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +90,11 @@ WSGI_APPLICATION = 'Proyecto_ds.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': BASE_DIR / 'db.postgresql',
+        'NAME': secrets["DB_NAME"],      
+        'USER': secrets["DB_USER"],      
+        'PASSWORD': secrets["DB_PASS"],  
+        'HOST': secrets["DB_HOST"],      
+        'PORT': secrets["DB_PORT"],      
     }
 }
 
@@ -130,4 +139,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.User'
+# AUTH_USER_MODEL = 'users.User'

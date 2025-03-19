@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
-class UsuarioPuntoAccesoConfig(AppConfig):
+class RolConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.usuarioPuntoAcceso'
+    name = 'apps.rol'
