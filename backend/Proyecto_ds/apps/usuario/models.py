@@ -9,7 +9,7 @@ class Usuario(models.Model):
     nombre = models.CharField(max_length=50)
     cedula = models.CharField(max_length=20, unique=True)
     codigo = models.CharField(max_length=20, unique=True, blank=True, null=True)
-    rol = models.ForeignKey(Rol, on_delete=models.CASCADE, db_column='id_rol')
+    id_rol = models.ForeignKey(Rol, on_delete=models.CASCADE, db_column='id_rol')
     id_ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, db_column='id_ticket')
 
     # Campos de estado

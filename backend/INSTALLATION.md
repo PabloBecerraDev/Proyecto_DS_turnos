@@ -12,7 +12,7 @@ Inside backend folder:
 
 ```
 # Create the virtual environment
-python -m venv env
+python -3.12 -m venv env
 ```
 
 or
@@ -48,7 +48,11 @@ In the settings.py file, configure the database you want to use (SQLite is the d
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': BASE_DIR / 'db.postgresql'
+        'NAME': 'database_name',
+        'USER': 'database_user',
+        'PASSWORD': 'database_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 ```

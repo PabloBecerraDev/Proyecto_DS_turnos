@@ -10,26 +10,25 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv
+
 from pathlib import Path
 
 from pathlib import Path
 import json
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# establezco la ruta del archivo secret.json
-SECRET_FILE = BASE_DIR.parent.parent / "secret.json"
-
-# leyendo secret.json
-with open(SECRET_FILE) as f:
-    secrets = json.load(f)
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Cargar variables de entorno
+load_dotenv()
+
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = secrets["SECRET_KEY"]
+SECRET_KEY = BASE_DIR.parent.parent / "secret.json"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'apps.usuario',
     'apps.puntoAcceso',
     'apps.rol',
@@ -90,11 +90,11 @@ WSGI_APPLICATION = 'Proyecto_ds.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': secrets["DB_NAME"],      
-        'USER': secrets["DB_USER"],      
-        'PASSWORD': secrets["DB_PASS"],  
-        'HOST': secrets["DB_HOST"],      
-        'PORT': secrets["DB_PORT"],      
+        'NAME': os.getenv("dbname"),
+        'USER': os.getenv("user"),
+        'PASSWORD': os.getenv("password"),
+        'HOST': os.getenv("host"),
+        'PORT': os.getenv("port"),
     }
 }
 
