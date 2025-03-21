@@ -2,7 +2,7 @@ Dentro de la carpeta backend
 
 # Configurar la Conexión de Django con Supabase
 
-## Instalar 
+## Instalar en el entorno virtual
 
 pip install python-dotenv psycopg2
 
@@ -31,6 +31,8 @@ Hay dos maneras directamente con psycopg2 o configurando
 DATABASES en el settings.py
 
 ### Forma uno
+
+Crear un archivo llamado main.py dentro del backend
 
 ```
 import psycopg2
@@ -75,7 +77,9 @@ except Exception as e:
     print(f"Failed to connect: {e}")
 ```
 
-### Forma uno
+### Forma dos
+
+En archivo settings.py
 
 ```
 import os

@@ -4,62 +4,58 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Permis
 from apps.rol.models import Rol
 from apps.ticket.models import Ticket
 
-class Usuario(models.Model):
+class UsuarioManager(BaseUserManager):
+    def create_usuario(self, cedula, password, **extra_fields):
+        if not cedula:
+            raise ValueError("El usuario debe tener una cédula")
+        if not password:
+            raise ValueError("El usuario debe tener una contraseña")
+        
+        usuario = self.model(cedula=cedula, **extra_fields)
+        usuario.set_password(password if password else cedula)  # Si no hay contraseña, usa la cédula
+        usuario.save(using=self._db)
+        return usuario
+        
+    def create_superuser(self, cedula, password, **extra_fields):
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_staff", True)
+
+        try:
+            rol_superadmin = Rol.objects.get(id_rol=1)  # 🔹 Corrección aquí
+        except Rol.DoesNotExist:
+            raise ValueError("El rol con ID 1 no existe. Debes crearlo en la base de datos.")
+
+        return self.create_usuario(cedula, password, id_rol=rol_superadmin, **extra_fields)
+
+class Usuario(AbstractBaseUser, PermissionsMixin):
     id_usuario = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50)
     cedula = models.CharField(max_length=20, unique=True)
     codigo = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    password = models.CharField(max_length=200, unique=True, default="123")
     id_rol = models.ForeignKey(Rol, on_delete=models.CASCADE, db_column='id_rol')
-    id_ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, db_column='id_ticket')
+    id_ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, db_column='id_ticket', blank=True, null=True)
 
     # Campos de estado
-    is_active = models.BooleanField(default=True) # Indica si el usuario puede iniciar sesion
-    tiene_prioridad = models.BooleanField(default=False) # Indica si el usuario tiene prioridad
+    is_active = models.BooleanField(default=True)  # Indica si el usuario puede iniciar sesión
+    tiene_prioridad = models.BooleanField(default=False)  # Indica si el usuario tiene prioridad
+    is_staff = models.BooleanField(default=False)  # Necesario para acceso al Django Admin
+    is_superuser = models.BooleanField(default=False)  # Para permisos de superusuario
 
-    # Devuelve la representacion en fila del objeto atencion
+    objects = UsuarioManager() 
+
+    USERNAME_FIELD = 'cedula'
+
     def __str__(self):
-        return f"{self.id_usuario}"
-    
-# # Administrador de usuarios 
-# class UserManager(BaseUserManager):
+        return f"{self.cedula} - {self.nombre}"
 
-#     # Metodo que crea y retorna un usuario con cédula y contraseña obligatoria
-#     def create_user(self, cedula, password, **extra_fields):
-
-#         # Se verifica si se proporciono los atributos cedula y contraseña
-#         if not cedula:
-#             raise ValueError("El usuario debe tener una cedula")
-#         if not password:
-#             raise ValueError("El usuario debe tener una contraseña") 
-        
-#         # Se crea una instancia (un objeto) del modelo customUsuario con la cedula y otros campos
-#         user = self.model(cedula=cedula, **extra_fields)
-
-#         # Metodo de la clase AbstractBaseUser para encriptar la contraseña antes de guardarla en la base de datos
-#         user.set_password(password)
-
-#         # Se guarda el usuario en la base de datos utilizando la base de datos por default
-#         user.save(using=self.db)
-
-#         # Se retorna el usuario creado
-#         return user
-    
-#     # Metodo que crea y retorna un superusuario
-#     def create_superuser(self, cedula, password, **extra_fields):
-
-#         # Establece 'is_admin' en True si no se ha proporcionado en extra_fields
-#         extra_fields.setdefault("is_admin", True)
-
-#         # Establece 'is_trabajador' en True si no se ha proporcionado en extra_fields
-#         extra_fields.setdefault("is_trabajador", True)
-
-#         # Establece 'is_superuser' en True si no se ha proporcionado en extra_fields
-#         extra_fields.setdefault("is_superuser", True)
-
-#         extra_fields.setdefault("is_staff", True)
-        
-#         # Llama a 'create_user' para crear el usuario con los permisos de superusuario
-#         return self.create_user(cedula, password, **extra_fields)
+    def save(self, *args, **kwargs):
+        """Se asegura que el campo is_staff e is_superuser sean consistentes con el rol."""
+        if self.id_rol and self.id_rol.nombre_rol.lower() in ["admin", "superusuario"]:
+            self.is_staff = True
+        if self.id_rol and self.id_rol.nombre_rol.lower() == "superusuario":
+            self.is_superuser = True
+        super().save(*args, **kwargs)
 
 # # Modelo de usuario
 # class User(AbstractBaseUser, PermissionsMixin):
@@ -113,21 +109,3 @@ class Usuario(models.Model):
 #     # Devuelve el nombre y el rol en texto
 #     def __str__(self):
 #         return f"{self.nombre} / {self.rol}"
-
-# # Relacion de atencion (muchos a muchos)
-# class Atencion(models.Model):
-#     '''
-#     Key foranea que referencia al modelo CustomUser, el cual representa al trabajador o administrador
-#     que realizo la atencion. Si el trabajador es eliminado, tambien se eliminan sus resgistros de atencion  
-#     '''
-#     trabajador = models.ForeignKey(User, on_delete=models.CASCADE, related_name="atendio")
-
-#     ''' 
-#     Key foranea que referencia al modelo CustomUser, el cual representa al usuario
-#     que recibio la atencion. Si el usuario es eliminado, tambien se eliminan sus resgistros de atencion  
-#     '''
-#     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="atendido")
-
-#     # Devuelve la representacion en fila del objeto atencion
-#     def __str__(self):
-#         return f"{self.trabajador.nombre} atendio a {self.usuario.nombre}"*/
