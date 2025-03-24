@@ -1,25 +1,23 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Atencion
+from .models import User
 
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ('cedula', 'nombre', 'is_trabajador', 'is_admin', 'rol', 'is_active', 'tiene_prioridad', 'codigo', 'is_staff')
-    search_fields = ('cedula', 'nombre')
-    list_filter = ('is_trabajador', 'is_admin', 'rol',)
+    list_display = ('cedula', 'nombre', 'is_trabajador', 'tiene_prioridad', 'codigo')
+    search_fields = ('cedula', 'nombre', 'codigo')
+    list_filter = ('is_trabajador', 'tiene_prioridad')
     ordering = ('cedula',)
     fieldsets = (
         ('Informacion', {'fields':('cedula', 'nombre', 'password')}),
-        ("Información adicional", {"fields": ("codigo", "tiene_prioridad")}),
-        ('Permisos', {'fields':('is_trabajador', 'is_admin', 'rol', 'is_active', 'is_staff')}),
+        ('Información adicional', {'fields': ('codigo', 'tiene_prioridad', 'is_trabajador', 'is_staff')}),
     )
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('cedula', 'nombre', 'password1', 'password2', 'rol', 'is_active', 'tiene_prioridad', 'codigo')}
+            'fields': ('cedula', 'nombre', 'password1', 'password2', 'tiene_prioridad', 'is_trabajador', 'codigo')}
         ),
     )
 
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Atencion)
