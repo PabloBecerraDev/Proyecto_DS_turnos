@@ -5,7 +5,7 @@ from .views import ListCreateUsuarios, CustomTokenObtainPairView
 
 from .views import *
 router = DefaultRouter()
-router.register(r'', ListCreateUsuarios)
+router.register(r'create', ListCreateUsuarios)
 
 urlpatterns = [
   path('', include(router.urls)),
