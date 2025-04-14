@@ -1,9 +1,6 @@
 import imgRegister from '@/assets/imagenCreateUser.png';
 import { useState } from 'react';
 
-
-
-
 const CreateUserForm = () => {
     const [showPassword, setshowPassword] = useState(false);
     const [isPriority, setIsPriority] = useState(false);
@@ -15,8 +12,6 @@ const CreateUserForm = () => {
     const handlePriorityChange = (e:React.ChangeEvent<HTMLInputElement>) => {
       setIsPriority(e.target.checked);
     };
-
-
 
   return (
     <section

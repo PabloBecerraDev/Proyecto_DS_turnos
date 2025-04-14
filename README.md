@@ -5,15 +5,22 @@
    ```sh
    python -m venv .venv
    ```
+
 2. **Activar el entorno virtual**:
    - En Windows:
      ```sh
      entornos\.venv\Scripts\activate
      ```
-3. **Instalar dependencias**:
+     En Linux:
+     ```
+     source .venv/bin/activate
+     ```
+
+3. **Instalar dependencias** dentro de la carpeta requierements:
    ```sh
    pip install -r local.txt
    ```
+
 4. **Ejecutar el servidor**:
    ```sh
    py manage.py runserver
@@ -22,7 +29,7 @@
 ##  Frontend
 1. **Moverse a la carpeta `frontend`**:
    ```sh
-   cd frontend
+   cd frontend/proyecto_ds
    ```
 2. **Instalar dependencias**:
    ```sh
