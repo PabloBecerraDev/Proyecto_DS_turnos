@@ -8,7 +8,7 @@ django-cors-headers==4.7.0
 djangorestframework-simplejwt==5.5.0
 #Database
 psycopg2==2.9.10
-psycopg2-binary==2.9.10
+#psycopg2-binary==2.9.10
 sqlparse==0.5.3
 
 python-dotenv==1.0.1
@@ -18,4 +18,3 @@ tzdata==2025.1
 Pillow==11.1.0
 # Testing
 ipython==8.32.0
-

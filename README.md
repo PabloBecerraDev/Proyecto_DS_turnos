@@ -18,7 +18,7 @@
 
 3. **Instalar dependencias** dentro de la carpeta requierements:
    ```sh
-   pip install -r local.txt
+   pip install -r requirements.txt
    ```
 
 4. **Ejecutar el servidor**:
@@ -29,7 +29,7 @@
 ##  Frontend
 1. **Moverse a la carpeta `frontend`**:
    ```sh
-   cd frontend/proyecto_ds
+   cd frontend/proyecto_ds/
    ```
 2. **Instalar dependencias**:
    ```sh

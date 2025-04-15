@@ -8,7 +8,7 @@ from .managers import UsuarioManager
 class Usuario(AbstractBaseUser, PermissionsMixin):
     nombre = models.CharField(max_length=50)
     cedula = models.CharField(max_length=20, unique=True)
-    codigo = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    codigo = models.IntegerField(max_length=20, unique=True, blank=True, null=True)
     password = models.CharField(max_length=200, unique=True, default="123")
     is_admin = models.BooleanField(default=False)
 
