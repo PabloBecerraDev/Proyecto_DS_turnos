@@ -34,6 +34,7 @@
 2. **Instalar dependencias**:
    ```sh
    npm install
+   npm install axios
    ```
 3. **Iniciar el servidor de desarrollo**:
    ```sh

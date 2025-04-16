@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { AxiosResponse } from 'axios'
+import { Link } from "react-router-dom"
+//Funcion de authcontext para obtener el payload del token desencriptado
+import { getPayload } from "../context/AuthContext.tsx"
+import { userService } from "../services/api.tsx"
 
 const styles: { [key: string]: React.CSSProperties } = {
   background: {
@@ -60,6 +65,33 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 const PersonalData = () => {
+  const [user, setUsers] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
+
+  //Id del usuario
+  const id = 1
+  console.log(localStorage.getItem("accessToken"))
+  console.log(getPayload.id())
+  const fetchUsers = async (id: number) => {
+    try {
+      const response: AxiosResponse<any, any> = await userService.getById(id)
+      setUsers(response.data)
+      setError("")
+      console.log(userService.getById(id))
+    } catch (err) {
+      setError("Error al cargar los usuarios")
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchUsers(id)
+  }, [])
+
   const [nombre] = useState('Juan Pérez');
   const [cedula] = useState('12345678');
   const [codigo] = useState('A123');

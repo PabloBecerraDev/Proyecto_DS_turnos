@@ -46,6 +46,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         
          #Añadir claims personalizados al token
+        token['id'] = user.id
         token['cedula'] = user.cedula
         token['nombre'] = user.nombre
         
