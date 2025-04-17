@@ -11,7 +11,7 @@ export const api = axios.create({
 api.interceptors.request.use(
   (config: any) => {
     const token = localStorage.getItem("accessToken")
-    if (token && config.headers) {
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
@@ -45,22 +45,15 @@ api.interceptors.response.use(
         return Promise.reject(refreshError)
       }
     }
-
     return Promise.reject(error)
   },
 )
 
-export interface User {
-  id?: number
-  // Añade aquí más campos según tu modelo de usuario
-  [key: string]: any
-}
-
 export const userService = {
-  getAll: () => api.get<User[]>("/usuario/create/"),
-  getById: (id: number | string) => api.get<User>(`/usuario/create/${id}/`),
-  create: (data: User) => api.post("/usuario/create/", data),
-  update: (id: number | string, data: Partial<User>) => api.put(`/usuario/create/${id}/`, data),
-  partialUpdate: (id: number | string, data: Partial<User>) => api.patch(`/usuario/create/${id}/`, data),
-  delete: (id: number | string) => api.delete(`/usuario/create/${id}/`),
+  getAll: () => api.get("/usuario/create/"),
+  getById: (id: any) => api.get(`/usuario/create/${id}/`),
+  create: (data: any) => api.post("/usuario/create/", data),
+  update: (id: any, data: any) => api.put(`/usuario/create/${id}/`, data),
+  partialUpdate: (id: any, data: any) => api.patch(`/usuario/create/${id}/`, data),
+  delete: (id: any) => api.delete(`/usuario/create/${id}/`),
 }

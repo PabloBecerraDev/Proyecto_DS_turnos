@@ -65,19 +65,18 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 const PersonalData = () => {
-  const [user, setUsers] = useState([])
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
 
   //Id del usuario
-  const id = 1
-  console.log(localStorage.getItem("accessToken"))
-  console.log(getPayload.id())
+  const id = getPayload.id().user_id
+  
   const fetchUsers = async (id: number) => {
     try {
       const response: AxiosResponse<any, any> = await userService.getById(id)
-      setUsers(response.data)
+      setUser(response.data)
       setError("")
       console.log(userService.getById(id))
     } catch (err) {
@@ -92,42 +91,35 @@ const PersonalData = () => {
     fetchUsers(id)
   }, [])
 
-  const [nombre] = useState('Juan Pérez');
-  const [cedula] = useState('12345678');
-  const [codigo] = useState('A123');
-  const [prioridad] = useState('Discapacitado');
-  const [contrasena] = useState('••••••••');
-
   return (
     <div style={styles.background}>
       <div style={styles.formWrapper}>
         <div style={styles.formLayout}>
-          <div style={styles.fieldContainer}>
-            <label style={styles.fieldLabel}>Nombre:</label>
-            <div style={styles.fieldValue}>{nombre}</div>
-          </div>
-
-          <div style={styles.fieldContainer}>
-            <label style={styles.fieldLabel}>Cédula:</label>
-            <div style={styles.fieldValue}>{cedula}</div>
-          </div>
-
-          <div style={styles.fieldContainer}>
-            <label style={styles.fieldLabel}>Código:</label>
-            <div style={styles.fieldValue}>{codigo}</div>
-          </div>
-
-          <div style={styles.fieldContainer}>
-            <label style={styles.fieldLabel}>Prioridad:</label>
-            <div style={styles.fieldValue}>{prioridad}</div>
-          </div>
-
-          <div style={styles.fieldContainer}>
-            <label style={styles.fieldLabel}>Contraseña:</label>
-            <div style={styles.fieldValue}>{contrasena}</div>
-          </div>
+        <div style={styles.fieldContainer}>
+          <label style={styles.fieldLabel}>Nombre:</label>
+          <div style={styles.fieldValue}>{user?.nombre ?? 'Cargando...'}</div>
         </div>
 
+        <div style={styles.fieldContainer}>
+          <label style={styles.fieldLabel}>Cédula:</label>
+          <div style={styles.fieldValue}>{user?.cedula ?? 'Cargando...'}</div>
+        </div>
+
+        <div style={styles.fieldContainer}>
+          <label style={styles.fieldLabel}>Código:</label>
+          <div style={styles.fieldValue}>{user?.codigo ?? 'Cargando...'}</div>
+        </div>
+
+        <div style={styles.fieldContainer}>
+          <label style={styles.fieldLabel}>Prioridad:</label>
+          <div style={styles.fieldValue}>{user?.prioridad ?? 'Sin prioridad'}</div>
+        </div>
+
+        <div style={styles.fieldContainer}>
+          <label style={styles.fieldLabel}>Contraseña:</label>
+          <div style={styles.fieldValue}>••••••••</div> {/* nunca muestres la real */}
+        </div>
+        </div>
         <button style={styles.button}>Editar</button>
       </div>
     </div>

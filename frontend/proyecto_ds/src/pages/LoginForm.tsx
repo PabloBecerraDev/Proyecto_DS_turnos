@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import imagenLogin from "@/assets/image.png";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useNavigate, Navigate } from "react-router-dom"
@@ -19,9 +19,11 @@ const LoginForm = () => {
   };
 
   // If already logged in, redirect to dashboard
-  if (isAuthenticated) {
-    return <Navigate to="/" />
-  }
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate("/")
+  //   }
+  // }, [isAuthenticated, navigate])  
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
