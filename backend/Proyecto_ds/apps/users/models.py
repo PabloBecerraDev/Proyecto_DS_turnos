@@ -1,34 +1,85 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
+from django.core.validators import RegexValidator, EmailValidator
 
-# Modelo de usuario
 class User(AbstractBaseUser, PermissionsMixin):
+    nombre = models.CharField(
+        max_length=50,
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z ]+$',
+                message="Solo se permiten letras",
+                code='nombre_invalido'
+            )
+        ]
+    )
 
-    # Campos rincipales del usuario
-    cedula = models.CharField(max_length=20, unique=True)
-    nombre = models.CharField(max_length=50)
-    codigo = models.CharField(max_length=20, unique=True, blank=True, null=True) # Codigo identificatorio del trabajador
-
-    # Campos de estado
-    is_trabajador = models.BooleanField(default=False) # Marca si el usuario es un trabajador
-    tiene_prioridad = models.BooleanField(default=False) # Indica si el usuario tiene prioridad
-    is_staff = models.BooleanField(default=False) # Indica si el usuario puede entrar al Django Admin
-
-    objects = UserManager() # Se asigna el administrador a utilizar
-    USERNAME_FIELD = "cedula" # Se define el identificador unico del usuario (el usuario iniciara sesión con su cedula)
-    REQUIRED_FIELDS = ["nombre"] # Campos obligatorios al crear un usuario con createsuperuser
-
-    def save(self, *args, **kwargs):
-        if self.is_trabajador:
-            if not self.codigo:
-                raise ValueError("El trabajador debe tener un codigo")
-        else:
-            self.codigo = None # Asegura que solo los trabajadores tienen un codigo
-
-        # Guarda el objeto en la base de datos
-        super().save(*args, **kwargs)
+    cedula = models.PositiveBigIntegerField(
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{7,10}$',
+                message="No es un numero de documento valido",
+                code="cedula_invalida"
+            )
+        ],
+        verbose_name='Cedula de ciudadania')
     
-    # Devuelve el nombre
+    email = models.EmailField(
+        unique=True, 
+        validators=[
+            EmailValidator(message="Correo electronico invalido")
+        ],
+        verbose_name="Correo electronico"
+    )
+
+    phone_number = models.CharField(
+        max_length=15, 
+        validators=[
+            RegexValidator(
+                regex=r'^\d{10,15}$',
+                message="No es un numero de celular valido",
+                code="numero_invalido"
+            )
+        ],
+        verbose_name="Numero de celular"
+    ) 
+
+    is_staff = models.BooleanField(default=False)
+    objects = UserManager()
+
+    USERNAME_FIELD = 'cedula'
+    REQUIRED_FIELDS = []
+
     def __str__(self):
-        return f"{self.nombre}"
+        return f"{self.nombre} ({self.cedula})"
+    
+    class Meta:
+        verbose_name = 'Usuario'
+        verbose_name_plural = 'Usuarios'
+        ordering = ['id']
+
+class Actor(User):
+    has_priority = models.BooleanField(default=False)
+    MOTIVE_CHOICES = [
+        ('A', 'Adulto de tercera edad.'),
+        ('B', 'Mujer embarazada.'),
+        ('C', 'Persona en silla de ruedas o muletas.'),
+        ('D', 'Otros.'),
+    ]
+
+    motive = models.CharField(max_length=100, choices=MOTIVE_CHOICES, blank = True, null = True)
+
+    class Meta:
+        verbose_name = 'Actor'
+        verbose_name_plural = 'Actores'
+        ordering = ['id']
+
+class Worker(User):
+    code = models.CharField(max_length=20, unique=True)
+
+    class Meta:
+        verbose_name = 'Trabajador'
+        verbose_name_plural = 'Trabajadores'
+        ordering = ['id']
