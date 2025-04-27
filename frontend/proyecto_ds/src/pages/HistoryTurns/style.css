@@ -1,0 +1,76 @@
+/* Estilo para el fondo general */
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f1f1f1;
+    padding: 1rem;
+  }
+  
+  /* Contenedor principal de la página */
+  .ticketContainer {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+  }
+  
+  /* Estilo de información del turno */
+  .turnInfo {
+    margin-bottom: 2rem;
+  }
+  
+  .turnInfo h2 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Estilo para la sección de historial de tickets */
+  .ticketHistorySection {
+    padding: 1rem;
+    background-color: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+    margin-top: 2rem;
+  }
+  
+  .ticketHistorySection h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .ticketHistoryItem {
+    padding: 0.75rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+  }
+  
+  .ticketHistoryItem span {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .ticketHistoryItem strong {
+    color: #4caf50;
+  }
+  
+  .ticketHistoryItem em {
+    font-style: italic;
+    color: #888;
+  }
+  
+  /* Estilo para los mensajes de no haber tickets */
+  .ticketHistorySection p {
+    font-size: 1rem;
+    color: #888;
+  }
+  

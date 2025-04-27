@@ -12,7 +12,7 @@ Inside backend folder:
 
 ```
 # Create the virtual environment
-python -3.12 -m venv env
+py -3.12 -m venv env
 ```
 
 or
