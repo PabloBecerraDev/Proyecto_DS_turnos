@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'drf_spectacular',
     'corsheaders',
+
+
+    # nuestras apps
     'apps.users',
     'apps.tickets',
     'apps.puntosAcceso',
@@ -145,7 +148,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000"
+    "http://localhost:5173"
 ]
 
 SIMPLE_JWT = {

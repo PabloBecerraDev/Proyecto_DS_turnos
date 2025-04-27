@@ -1,14 +1,45 @@
 import { useState } from "react";
 import imagenLogin from "@/assets/image.png";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { LoginPayLoad } from "@/auth/authService";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+
+
+import LoginUser from "@/api/LoginUser";
+
 
 const LoginForm = () => {
   const [showPassword, setshowPassword] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [cedula, setCedula] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
 
   const togglePasswordVisibility = () => {
     setshowPassword(!showPassword);
   };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const payload: LoginPayLoad = {
+      cedula: cedula.toString(),
+      password: password,
+    };
+
+    try {
+      await LoginUser(payload);
+      toast.success("Usuario creado correctamente.");
+      navigate("/");
+    } catch (error) {
+      toast.error("Las credenciales no coinciden.");
+      console.error(error);
+    }
+  };
+  
 
   return (
 
@@ -16,6 +47,7 @@ const LoginForm = () => {
     <section 
       className="flex items-center justify-center h-screen"
     >
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className={`bg-stone-100 flex rounded-2xl shadow-lg w-[65%] h-[78%] m-11 
         ${isMobile ? "flex-col" : "flex-row"}
       `}>
@@ -26,6 +58,7 @@ const LoginForm = () => {
         >
           <form 
           action=""
+          onSubmit={handleSubmit}
           className="flex flex-col w-full p-4"
           >
             <h2
@@ -45,6 +78,8 @@ const LoginForm = () => {
               name="cedula" 
               placeholder="Cedula" 
               className="p-2 mt-8 rounded-xl bg-gray-300 w-[95%]"
+              value={cedula}
+              onChange={(e)=>setCedula(e.target.value)}
             />
 
             <div className="relative w-[95%] mt-4">
@@ -53,6 +88,8 @@ const LoginForm = () => {
                   type={showPassword ? "text" : "password"}  
                   name="password" 
                   placeholder="Password"
+                  value={password}
+                  onChange={(e)=> setPassword(e.target.value)}
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

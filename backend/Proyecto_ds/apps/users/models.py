@@ -60,6 +60,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Usuarios'
         ordering = ['id']
 
+
+
 class Actor(User):
     has_priority = models.BooleanField(default=False)
     MOTIVE_CHOICES = [

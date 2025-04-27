@@ -1,6 +1,10 @@
 import imgRegister from '@/assets/imagenCreateUser.png';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import { ActorPayload} from '@/api/types';
 import { useState } from 'react';
+import CreateUserActor from '@/api/CreateClient';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 //funcion para generar contraseñas de los usuarios 
 function generarContraseña(longitud: number): string {
@@ -15,11 +19,66 @@ function generarContraseña(longitud: number): string {
   return contraseña;
 }
 
+ 
+
+
+
+
 
 const CreateUserForm = () => {
     const [showPassword, setshowPassword] = useState(false);
     const [isPriority, setIsPriority] = useState(false);
     const [contraseña, setContraseña] = useState("");
+
+
+    const [nombre, setNombre] = useState("");
+    const [cedula, setCedula] = useState("");
+    const [telefono, setTelefono] = useState("");
+    const [email, setEmail] = useState("");
+    const [prioridadTipo, setprioridadTipo] = useState("");
+
+
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault() //se usa para evitar qu ela pagina se recargue 
+      if (!nombre || !cedula || !telefono || !email || !contraseña) {
+        alert("Por favor completa todos los campos requeridos.");
+        return;
+      }
+    
+      const payload: ActorPayload = {
+        nombre: nombre,
+        cedula: Number(cedula),
+        email: email,
+        phone_number: telefono,
+        password: contraseña,
+        has_priority: isPriority,
+        motive: isPriority
+        ? (prioridadTipo !== "" ? prioridadTipo as "A" | "B" | "C" | "D" : undefined)
+        : undefined,
+      };
+
+      try {
+        const response = await CreateUserActor(payload);
+        console.log("Usuario creado exitosamente:", response);
+        toast.success("Usuario creado con exito.");
+        
+        //Limpiar campos
+        setNombre("");
+        setCedula("");
+        setTelefono("");
+        setEmail("");
+        setContraseña("");
+        setIsPriority(false);
+        setprioridadTipo("");
+    
+      } catch (error) {
+        console.error("Error al crear el usuario:", error);
+        alert("Ocurrió un error al crear el usuario. Revisa los campos o intenta más tarde.");
+      }
+    
+    };
+
     const isMobile = useMediaQuery("(max-width: 768px)");
     
     const togglePasswordVisibility = () => {
@@ -39,8 +98,9 @@ const CreateUserForm = () => {
     <section
         className='flex min-h-screen items-center justify-center'
     >
+      <ToastContainer position="top-right" autoClose={3000} />
       <div
-        className={`flex bg-stone-100 rounded-2xl shadow-lg ${isMobile ? "w-[90% ]" : "w-3/4"} p-5 mt-11 mb-11`}
+        className={`flex bg-stone-100 rounded-2xl shadow-lg ${isMobile ? "w-[90%]" : "w-3/4"} p-5 mt-11 mb-11`}
 
         
       >
@@ -64,6 +124,7 @@ const CreateUserForm = () => {
           <form 
           action=""
           className='flex flex-col w-full'
+          onSubmit={handleSubmit}
           >
             <h2 className="font-bold text-2xl ">Register</h2>
             <p
@@ -74,6 +135,8 @@ const CreateUserForm = () => {
               type="text" 
               name="name" 
               placeholder="Nombre" 
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
               className="p-2 mt-8 rounded-xl bg-gray-300 "
             />
 
@@ -82,7 +145,27 @@ const CreateUserForm = () => {
               name="cedula" 
               placeholder="Cedula" 
               className="p-2 mt-8 rounded-xl bg-gray-300 "
+              value={cedula}
+              onChange={(e) => setCedula(e.target.value)}
               min={1}
+            />
+
+            <input 
+              type="text" 
+              name="telefono" 
+              placeholder="Telefono" 
+              className="p-2 mt-8 rounded-xl bg-gray-300 "
+              value={telefono}
+              onChange={(e) => setTelefono(e.target.value)}
+            />
+
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Email" 
+              className="p-2 mt-8 rounded-xl bg-gray-300 "
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <label className="flex items-center mt-8 text-sm text-neutral-500">
@@ -97,11 +180,17 @@ const CreateUserForm = () => {
 
             {/* Lista condicional */}
             {isPriority && (
-              <select className="p-2 mt-4 rounded-xl bg-gray-300 ">
+              <select 
+                className="p-2 mt-4 rounded-xl bg-gray-300 "
+                value={prioridadTipo}
+                onChange={(e)=> setprioridadTipo(e.target.value)}
+              
+              >
                 <option value="">Seleccione una opción</option>
-                <option value="embarazo">Mujer embarazada</option>
-                <option value="muletas">Persona en muletas</option>
-                <option value="tercera-edad">Tercera edad</option>
+                <option value="A">Mujer embarazada</option>
+                <option value="B">Persona en muletas</option>
+                <option value="C">Tercera edad</option>
+                <option value="D">Otro caso...</option>
               </select>
             )}
 
@@ -135,27 +224,6 @@ const CreateUserForm = () => {
                   <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                 </svg>
             </div>
-
-            {/* <div className="relative  ">
-              <input 
-                className="p-2 mt-8 rounded-xl bg-gray-300 w-full" 
-                type={showPassword ? "text" : "password"}  
-                name="Password" 
-                placeholder="Password verification"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="gray"
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer mt-4"
-                viewBox="0 0 16 16"
-                onClick={togglePasswordVisibility}
-              >
-                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-              </svg>
-            </div> */}
 
             <button
               type="button"

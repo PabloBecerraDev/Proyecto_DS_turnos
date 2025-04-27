@@ -39,12 +39,14 @@ class ActorSerializer(serializers.ModelSerializer):
         model = Actor
         fields = ['id', 'nombre', 'cedula', 'email', 'phone_number', 'password', 'has_priority', 'motive']
         extra_kwargs = {
-            'password':{'write_only':True}
+            'password':{'write_only':True},
+            'motive': {'required': False, 'allow_null': True}
         }
 
     def create(self, validated_data):
         has_priority = validated_data.pop('has_priority')
-        motive = validated_data.pop('motive')
+        #motive = validated_data.pop('motive')
+        motive = validated_data.pop('motive', None)  
         
         user = User.objects.create_user(
             cedula=validated_data['cedula'],
