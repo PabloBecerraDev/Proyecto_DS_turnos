@@ -1,3 +1,2 @@
-/Entornos/.venv/
-.env
-/secret.json
+# /Entornos/.venv/
+# /secret.json
