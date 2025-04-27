@@ -30,7 +30,30 @@ superior de la pagina web, Connect--> type --> Python
 Hay dos maneras directamente con psycopg2 o configurando 
 DATABASES en el settings.py
 
-### Forma uno
+### Forma uno (usada)
+
+En archivo settings.py
+
+```
+import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+load_dotenv()
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("dbname"),
+        'USER': os.getenv("user"),
+        'PASSWORD': os.getenv("password"),
+        'HOST': os.getenv("host"),
+        'PORT': os.getenv("port"),
+    }
+}
+```
+
+### Forma dos
 
 Crear un archivo llamado main.py dentro del backend
 
@@ -76,30 +99,3 @@ try:
 except Exception as e:
     print(f"Failed to connect: {e}")
 ```
-
-### Forma dos
-
-En archivo settings.py
-
-```
-import os
-from dotenv import load_dotenv
-
-# Cargar variables de entorno
-load_dotenv()
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("dbname"),
-        'USER': os.getenv("user"),
-        'PASSWORD': os.getenv("password"),
-        'HOST': os.getenv("host"),
-        'PORT': os.getenv("port"),
-    }
-}
-```
-
-## Probar conexion
-
-En la terminal
