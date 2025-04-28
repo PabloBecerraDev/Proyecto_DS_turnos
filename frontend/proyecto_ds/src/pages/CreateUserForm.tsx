@@ -6,6 +6,8 @@ import CreateUserActor from '@/api/CreateClient';
 import { ToastContainer, toast } from 'react-toastify';
 
 
+
+
 //funcion para generar contraseñas de los usuarios 
 function generarContraseña(longitud: number): string {
   const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -18,8 +20,6 @@ function generarContraseña(longitud: number): string {
 
   return contraseña;
 }
-
- 
 
 
 
@@ -42,7 +42,28 @@ const CreateUserForm = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault() //se usa para evitar qu ela pagina se recargue 
       if (!nombre || !cedula || !telefono || !email || !contraseña) {
-        alert("Por favor completa todos los campos requeridos.");
+        toast.error("Por favor complete todos los campos.");
+        return;
+      }
+
+      if (nombre.trim().length < 3) {
+        toast.error("El nombre debe tener al menos 3 caracteres");
+        return;
+      }
+    
+      if (cedula.length > 10) {
+        toast.error("La cédula debe tener maximo 10 dígitos numéricos");
+        return;
+      }
+    
+      if (contraseña.length < 6) {
+        toast.error("La contraseña debe tener al menos 6 caracteres");
+        return;
+      }
+    
+      // (Opcional) Validar prioridad si es requerida
+      if (isPriority && !prioridadTipo) {
+        toast.error("Debe seleccionar un motivo de prioridad");
         return;
       }
     
@@ -95,14 +116,25 @@ const CreateUserForm = () => {
     }
 
   return (
-    <section
-        className='flex min-h-screen items-center justify-center'
-    >
-      <ToastContainer position="top-right" autoClose={3000} />
-      <div
-        className={`flex bg-stone-100 rounded-2xl shadow-lg ${isMobile ? "w-[90%]" : "w-3/4"} p-5 mt-11 mb-11`}
 
-        
+    <section
+        className='flex min-h-screen items-center justify-center relative overflow-hidden'
+    >
+
+
+      <ToastContainer
+        position={isMobile ? "top-center" : "top-right"}
+        autoClose={3000}
+        limit={isMobile ? 2 : 5}
+        toastClassName={() =>
+          `relative flex p-5 rounded-md justify-between overflow-hidden cursor-pointer 
+          ${isMobile ? "w-[90%] text-sm" : "w-[400px] text-base"} text-black bg-white shadow-md`
+        }
+      />
+
+      
+      <div
+        className={`flex bg-stone-100 rounded-2xl shadow-lg ${isMobile ? "w-[90%]" : "w-3/4"} p-5 mt-11 mb-11`}        
       >
         {/* imagen */}
 

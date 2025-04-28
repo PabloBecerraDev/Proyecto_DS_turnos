@@ -2,6 +2,7 @@ import api from "./axios";
 import { ActorPayload } from "@/api/types";
 
 const CreateUserActor = async (data: ActorPayload): Promise<ActorPayload | void> => {
+  console.log(data.cedula);
   try {
     const response = await api.post<ActorPayload>("users/actors/", data, {
       headers: {

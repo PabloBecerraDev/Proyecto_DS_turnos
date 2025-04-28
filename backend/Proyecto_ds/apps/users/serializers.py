@@ -42,11 +42,21 @@ class ActorSerializer(serializers.ModelSerializer):
             'password':{'write_only':True},
             'motive': {'required': False, 'allow_null': True}
         }
+        
+    def validate(self, attrs):
+        print("Entrando en validación del serializador")
+        print(f"Datos recibidos: {attrs}")
+        return attrs
 
     def create(self, validated_data):
-        has_priority = validated_data.pop('has_priority')
+        has_priority = validated_data.pop('has_priority', False)
         #motive = validated_data.pop('motive')
         motive = validated_data.pop('motive', None)  
+        print(motive)
+        if not has_priority:
+            motive = None 
+        else:
+            motive = validated_data.pop('motive', None)
         
         user = User.objects.create_user(
             cedula=validated_data['cedula'],
