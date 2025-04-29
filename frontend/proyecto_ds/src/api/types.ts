@@ -4,7 +4,15 @@ export interface CreateUserWorkerPayload {
     nombre: string;
     email: string;
     phone_number: number;
-    code: number;
+}
+
+export type CreateUserWorkerResponse = {
+    id: number;
+    nombre: string;
+    cedula: number;
+    email: string;
+    phone_number: number;
+    code: string;
 }
 
 
@@ -27,3 +35,6 @@ export type ActorResponse = {
     has_priority: boolean;
     motive: "A" | "B" | "C" | "D" | null;
   };
+
+
+

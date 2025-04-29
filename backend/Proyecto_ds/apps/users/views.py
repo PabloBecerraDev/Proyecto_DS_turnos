@@ -6,6 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Actor, Worker
+from .permission import *
 
 User = get_user_model()
 
@@ -38,7 +39,7 @@ class ActorViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action == 'create':
-            return [permissions.AllowAny()]
+            return [IsWorker()]
         return [permission() for permission in self.permission_classes]
 
 class WorkerViewSet(viewsets.ModelViewSet):

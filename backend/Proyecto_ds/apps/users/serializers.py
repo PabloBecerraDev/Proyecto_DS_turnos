@@ -42,7 +42,7 @@ class ActorSerializer(serializers.ModelSerializer):
             'password':{'write_only':True},
             'motive': {'required': False, 'allow_null': True}
         }
-        
+
     def validate(self, attrs):
         print("Entrando en validación del serializador")
         print(f"Datos recibidos: {attrs}")
@@ -94,11 +94,12 @@ class WorkerSerializer(UserSerializer):
         model = Worker
         fields = ['id', 'nombre', 'cedula', 'email', 'phone_number', 'password', 'code']
         extra_kwargs = {
-            'password':{'write_only':True}
+            'password':{'write_only':True},
+            'code': {'required': False, 'allow_null': True}
         }
 
     def create(self, validated_data):
-        code = validated_data.pop('code')
+        # code = validated_data.pop('code')
         
         user = User.objects.create_user(
             cedula=validated_data['cedula'],
@@ -114,7 +115,7 @@ class WorkerSerializer(UserSerializer):
             nombre=user.nombre,
             email=user.email,
             phone_number=user.phone_number,
-            code=code,
+            # code=code,
             id=user.id
         )
         return worker
@@ -137,6 +138,18 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['id'] = user.id
         token['cedula'] = user.cedula
         token['nombre'] = user.nombre
+
+        # la idea con esto es la siguiente una vez que alguien se loguee 
+        # en el token tambien ira la informacion de que rol cumple el user 
+        # logueado esto para protejer las rutas en el frontend
+        if hasattr(user, 'actor'):
+            token['role'] = 'actor'
+        elif hasattr(user, 'worker'):
+            token['role'] = 'worker'
+        else:
+            token['role'] = 'user'
+        
+
         return token
     
     def validate(self, attrs):

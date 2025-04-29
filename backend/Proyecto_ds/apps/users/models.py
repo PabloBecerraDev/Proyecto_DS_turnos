@@ -81,6 +81,13 @@ class Actor(User):
 class Worker(User):
     code = models.CharField(max_length=20, unique=True)
 
+    def save(self, *args, **kwargs):
+        if not self.code:
+            last_worker = Worker.objects.order_by('id').last()
+            next_id = (last_worker.id + 1) if last_worker else 1
+            self.code = f'CODE-{next_id}'
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'Trabajador'
         verbose_name_plural = 'Trabajadores'
