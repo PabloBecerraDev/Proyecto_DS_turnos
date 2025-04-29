@@ -50,9 +50,8 @@ class ActorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         has_priority = validated_data.pop('has_priority', False)
-        #motive = validated_data.pop('motive')
-        motive = validated_data.pop('motive', None)  
-        print(motive)
+        # motive = validated_data.pop('motive')
+        # motive = validated_data.pop('motive', None)  
         if not has_priority:
             motive = None 
         else:

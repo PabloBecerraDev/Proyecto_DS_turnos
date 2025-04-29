@@ -1,0 +1,59 @@
+.background {
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  .formWrapper {
+    max-width: 900px; /* Aumenta el ancho máximo */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible dentro del máximo */
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px; /* Aumentar padding para más espacio */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .fieldContainer {
+    margin-bottom: 15px;
+  }
+  
+  .fieldLabel {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .fieldValue, .fieldInput {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  .fieldInput {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .saveButton, .cancelButton, .editButton {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .saveButton:hover, .cancelButton:hover, .editButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .cancelButton {
+    background-color: #dc3545;
+  }
+  
+  .cancelButton:hover {
+    background-color: #c82333;
+  }
+  

@@ -1,6 +1,6 @@
 import CreateUserForm from "@/pages/CreateUserForm";
 import CreateWorkerForm from "@/pages/CreateWorkerForm";
-import HomePage from "@/pages/HomePage";
+import HomePage from "@/pages/GlobalHome";
 import LoginForm from "@/pages/LoginForm";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoutes";
