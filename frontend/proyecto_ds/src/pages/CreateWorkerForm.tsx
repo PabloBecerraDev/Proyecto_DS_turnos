@@ -38,7 +38,7 @@ const CreateWorkerForm = () => {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        //e.preventDefault() //se usa para evitar qu ela pagina se recargue 
+        e.preventDefault() //se usa para evitar qu ela pagina se recargue 
         if (!nombre || !cedula || !telefono || !email || !contraseña) {
             toast.error("Por favor complete todos los campos.");
             return;
@@ -82,7 +82,7 @@ const CreateWorkerForm = () => {
 
     return (
         <section
-            className='flex min-h-screen items-center justify-center relative overflow-hidden'
+            className='flex min-h-screen h-[100%] items-center justify-center relative overflow-hidden'
         >
 
 
@@ -98,15 +98,15 @@ const CreateWorkerForm = () => {
 
         
         <div
-            className={`flex bg-stone-100 rounded-2xl shadow-lg ${isMobile ? "w-[90%]" : "w-3/4"} p-5 mt-11 mb-11`}        
+            className={`flex bg-stone-100 rounded-2xl shadow-lg ${isMobile ? "w-[90%]" : "w-[85%]"} p-5 mt-11 mb-11`}        
         >
             {/* imagen */}
 
             {!isMobile && (
             <div
-            className="sm:block hidden w-[45%] h-full"
+            className=" flex w-[45%] h-[100%] justify-center items-center "
             >
-                <img src={imgRegister} alt="" className="w-3/4 h-full rounded-2xl"/>
+                <img src={imgRegister} alt="" className="w-[420px] h-[638px] rounded-2xl "/>
             </div>
             )}
             
@@ -114,12 +114,12 @@ const CreateWorkerForm = () => {
             {/* campos */}
 
             <div
-            className={`flex  min-w-[255px] ${isMobile? "w-[100%]" : "w-[55%]"} justify-center items-center`}
+            className={`flex  min-w-[255px] ${isMobile? "w-[100%]" : "w-[55%]"} justify-center mt-8 `}
             >
 
             <form 
             action=""
-            className='flex flex-col w-full'
+            className='flex flex-col w-[80%]'
             onSubmit={handleSubmit}
             >
                 <h2 className="font-bold text-2xl ">Register worker</h2>
