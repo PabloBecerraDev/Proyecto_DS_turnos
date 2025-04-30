@@ -1,4 +1,4 @@
-import imgRegister from '@/assets/imagenCreateUser.png';
+import imgRegister from '@/assets/logo.png';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { useState } from 'react';
 import { createUsuario } from "../../api/user";
