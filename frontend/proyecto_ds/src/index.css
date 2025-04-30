@@ -3,6 +3,19 @@
 
 /* ESTOS ESTILOS SE PUEDEN COMENTAR  */
 
+img {
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+  width: 100px; /* Ajusta el tamaño según lo que prefieras */
+  height: 100px; /* Asegúrate de que sea cuadrada para que el borde redondo funcione */
+}
+
+.logo {
+  border-radius: 50%; /* Hace la imagen redonda */
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* Asegura que la imagen se ajuste bien */
+}
+
 
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
