@@ -1,32 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
+import Navbar from '../navbar/navbar';
+
 
 // Simulamos la obtención de datos del usuario
-const fetchUserProfile = async () => {
-  return {
-    name: 'Juan Pérez',
-    email: 'juan.perez@example.com',
-  };
-};
+// const fetchUserProfile = async () => {
+//   return {
+//     name: 'Juan Pérez',
+//     email: 'juan.perez@example.com',
+//   };
+// };
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const getUserProfile = async () => {
-      const profile = await fetchUserProfile();
-      setUser(profile);
-    };
-    getUserProfile();
+    const storedUser = localStorage.getItem("usuario");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
   }, []);
 
   return (
-    <div className="profile-container">
+    <>
+    <Navbar />
+    <div className="profile-container mt-10">
+      
       {/* Cabecera con nombre y correo */}
       <div className="header">
-        <h1>Bienvenido, {user?.name}</h1>
+        <h1>Bienvenido, {user?.nombre}</h1>
         <p className="email">{user?.email}</p>
       </div>
 
@@ -46,6 +50,7 @@ const ProfilePage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,9 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { useEffect, useState } from "react";
+
 
 export default function HomePage() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+  
+    useEffect(() => {
+      const storedUser = localStorage.getItem("usuario");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }, []);
 
   return (
     <section className="flex min-h-screen items-center justify-center bg-gradient-to-b from-indigo-100 to-indigo-200">
@@ -28,12 +38,22 @@ export default function HomePage() {
             </button>
 
             {/* Botón de Iniciar sesión */}
-            <button
-              onClick={() => navigate("/login")}
-              className="py-3 px-6 rounded-full bg-blue-600 text-white hover:bg-blue-700 active:scale-95 transition-all font-semibold mt-4 text-2xl"
-            >
-              Iniciar Sesión
-            </button>
+            {!user ? (
+              <button
+                onClick={() => navigate("/login")}
+                className="py-3 px-6 rounded-full bg-blue-600 text-white hover:bg-blue-700 active:scale-95 transition-all font-semibold mt-4 text-2xl"
+              >
+                Iniciar Sesión
+              </button>
+            ): (
+              <button
+                onClick={() => navigate("/home-user")}
+                className="py-3 px-6 rounded-full bg-blue-600 text-white hover:bg-blue-700 active:scale-95 transition-all font-semibold mt-4 text-2xl"
+              >
+                ¡Solicita tu turno!
+              </button>
+            )}
+            
           </div>
         </div>
 

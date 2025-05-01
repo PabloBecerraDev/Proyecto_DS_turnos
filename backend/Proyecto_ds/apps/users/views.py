@@ -2,7 +2,7 @@ from rest_framework import viewsets, permissions, status, views
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, ActorSerializer, WorkerSerializer, CustomTokenObtainPairSerializer
 from rest_framework.decorators import action
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Actor, Worker
@@ -12,13 +12,17 @@ User = get_user_model()
 
 class LogoutView(views.APIView):
     permission_classes = [permissions.AllowAny]
+    authentication_classes = []
 
     def post(self, request):
+        print(request)
         try:
             refresh_token = request.data["refresh"]
             token = RefreshToken(refresh_token)
-            token.blacklist
-            return Response({'message': 'Sesion cerrada correctamente'}, status=status.HTTP_200_OK)
+            token.blacklist()
+            return Response({'message': 'Sesión cerrada correctamente'}, status=status.HTTP_200_OK)
+        except TokenError as e:
+            return Response({'message': 'Token ya está invalidado'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST) 
 

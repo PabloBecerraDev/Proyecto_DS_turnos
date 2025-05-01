@@ -20,4 +20,10 @@ export const clearTokens = () => {
 
 export const deleteUser = () => {
     localStorage.removeItem("usuario")
-}
+};
+
+
+export const logout = () => {
+    clearTokens();
+    deleteUser();
+};

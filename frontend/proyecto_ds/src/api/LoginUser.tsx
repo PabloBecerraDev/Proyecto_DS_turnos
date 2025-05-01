@@ -1,4 +1,4 @@
-import { setActualUser, setTokens, clearTokens } from "@/utils/tokenUtils";
+import { setActualUser, setTokens } from "@/utils/tokenUtils";
 import api from "./axios";
 import { LoginPayLoad, LoginResponse } from "@/auth/authService";
 
@@ -25,8 +25,6 @@ const LoginUser = async (data: LoginPayLoad): Promise<void> => {
     }
 };
 
-export const logout = () => {
-    clearTokens();
-};
+
 
 export default LoginUser;
