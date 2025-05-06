@@ -50,7 +50,7 @@ export default function HomePage() {
                 onClick={() => navigate("/home-user")}
                 className="py-3 px-6 rounded-full bg-blue-600 text-white hover:bg-blue-700 active:scale-95 transition-all font-semibold mt-4 text-2xl"
               >
-                ¡Solicita tu turno!
+                Acceder al sistema
               </button>
             )}
             

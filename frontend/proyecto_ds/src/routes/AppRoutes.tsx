@@ -6,10 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoutes";
 import PersonalData from "@/pages/PersonalData/PersonalData";
 import ProfilePage from "@/pages/HomeUser/HomeUser";
+import RequestTicketPage from "@/pages/RequestTicket/RequestTicket";
+import TicketHistoryPage from "@/pages/TicketHistory/TicketHistory";
 // import Logout from "@/api/Logout";
-
-
-
 
 const AppRoutes = () => {
     return (
@@ -29,9 +28,24 @@ const AppRoutes = () => {
                     </ProtectedRoute>
                     }
                 />
+                 <Route
+                    path="/register-worker"
+                    element={
+                    <ProtectedRoute role="worker">
+                        <CreateWorkerForm/>
+                    </ProtectedRoute>
+                    }
+                />
 
-
-                <Route path="/register-worker" element= {<CreateWorkerForm/>}></Route>
+                <Route path="/solicitar-turno" element={<RequestTicketPage/>}/>
+                <Route
+                    path="/ticket-history"
+                    element={
+                    <ProtectedRoute>
+                        <TicketHistoryPage/>
+                    </ProtectedRoute>
+                    }
+                />
             </Routes>
         </BrowserRouter>
     )

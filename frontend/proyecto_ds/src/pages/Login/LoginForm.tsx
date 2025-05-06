@@ -49,11 +49,12 @@ const LoginForm = () => {
       password: password,
     };
 
-    try {
+   try {
       await LoginUser(payload);
-        navigate("/self");
+      navigate("/home-user")
     } catch (err: any) {
       console.error("Detalle del error:", err);
+
       if (err.response?.status === 400) {
         toast.error("Las credenciales no coinciden.");
       } else if (err.response?.status === 500) {
@@ -61,6 +62,7 @@ const LoginForm = () => {
       } else {
         toast.error("No se pudo conectar con el servidor.");
       }
+    } finally {
       setLoading(false);
     } 
   }
@@ -98,7 +100,7 @@ const LoginForm = () => {
             <p
             className="text-sm mt-3 text-neutral-500 text-left"
             >
-              logeate para acceder a la fila virtual.
+              Inicia sesión para acceder a Q-manager.
             </p>
 
             {error && (
