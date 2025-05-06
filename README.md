@@ -11,7 +11,7 @@
      entornos\.venv\Scripts\activate
      ```
    - En Linux:
-   ```sh
+      ```sh
      source entornos/.venv/bin/activate
      ```      
 3. **Instalar dependencias**:
