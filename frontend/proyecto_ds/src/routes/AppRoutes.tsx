@@ -27,17 +27,16 @@ const AppRoutes = () => {
                     </ProtectedRoute>
                     }
                 />
-
-
-                <Route path="/register-worker" element= {<CreateWorkerForm/>}></Route>
-                <Route
-                    path="/solicitar-turno"
+                 <Route
+                    path="/register-worker"
                     element={
-                        <ProtectedRoute role="worker">
-                            <RequestTicketPage />
-                        </ProtectedRoute>
+                    <ProtectedRoute role="worker">
+                        <CreateWorkerForm/>
+                    </ProtectedRoute>
                     }
                 />
+
+                <Route path="/solicitar-turno" element={<RequestTicketPage/>}/>
             </Routes>
         </BrowserRouter>
     )
