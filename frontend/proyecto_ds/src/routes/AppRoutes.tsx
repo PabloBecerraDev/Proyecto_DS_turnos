@@ -7,6 +7,7 @@ import ProtectedRoute from "./ProtectedRoutes";
 import PersonalData from "@/pages/PersonalData/PersonalData";
 import ProfilePage from "@/pages/HomeUser/HomeUser";
 import RequestTicketPage from "@/pages/RequestTicket/RequestTicket";
+import TicketHistoryPage from "@/pages/TicketHistory/TicketHistory";
 // import Logout from "@/api/Logout";
 
 const AppRoutes = () => {
@@ -37,6 +38,14 @@ const AppRoutes = () => {
                 />
 
                 <Route path="/solicitar-turno" element={<RequestTicketPage/>}/>
+                <Route
+                    path="/ticket-history"
+                    element={
+                    <ProtectedRoute>
+                        <TicketHistoryPage/>
+                    </ProtectedRoute>
+                    }
+                />
             </Routes>
         </BrowserRouter>
     )

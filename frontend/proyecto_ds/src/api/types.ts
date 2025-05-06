@@ -36,20 +36,23 @@ export type ActorResponse = {
   };
 
 export interface TicketRequestData {
-  service: string; 
+  service: string;          
+  modality: "VIRTUAL" | "PRESENCIAL"; 
 }
 
 export interface TicketResponseData {
   id: number;
-  user: number; 
+  user: number;
   service: string;
-  is_priority: boolean; 
-  ticket_number: string; 
-  status: string; 
-  created_at: string; 
-  updated_at: string; 
-  user_username?: string; 
-  status_display?: string; 
+  modality: "VIRTUAL" | "PRESENCIAL"; 
+  is_priority: boolean;
+  ticket_number: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  user_username?: string;
+  status_display?: string;
+  modality_display?: string;
 }
 
 export interface JwtPayload {

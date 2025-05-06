@@ -35,7 +35,7 @@ const HomeUserPage: React.FC = () => {
         <div className="menu">
           <div className="card" onClick={() => navigate('/manage-accesspoint')}>
             <h3>Gestionar Fila</h3>
-            <p>Cambia el estado de un punto de atención.</p>
+            <p>Gestiona tu punto de atención asignado.</p>
           </div>
           <div className="card" onClick={() => navigate('/register')}>
             <h3>Registrar Usuario</h3>
@@ -56,12 +56,12 @@ const HomeUserPage: React.FC = () => {
       return (
         <div className="menu">
           <div className="card" onClick={() => navigate('/solicitar-turno')}>
-            <h3>Solicitar Nuevo Turno</h3>
-            <p>Accede para solicitar un turno en el sistema.</p>
+            <h3>Solicitar Nuevo Ticket</h3>
+            <p>Solicita un ticket en el sistema.</p>
           </div>
-          <div className="card" onClick={() => navigate('/history')}>
+          <div className="card" onClick={() => navigate('/ticket-history')}>
             <h3>Ver Historial de Tickets</h3>
-            <p>Consulta el estado de tus tickets anteriores.</p>
+            <p>Consulta tus tickets anteriores.</p>
           </div>
           <div className="card" onClick={() => navigate('/personal-data')}>
             <h3>Mis Datos</h3>
