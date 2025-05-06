@@ -15,6 +15,7 @@ export type CreateUserWorkerResponse = {
     code: string;
 }
 
+
 export interface ActorPayload {
     nombre: string;
     cedula: number;
@@ -35,33 +36,5 @@ export type ActorResponse = {
     motive: "A" | "B" | "C" | "D" | null;
   };
 
-export interface TicketRequestData {
-  service: string;          
-  modality: "VIRTUAL" | "PRESENCIAL"; 
-}
 
-export interface TicketResponseData {
-  id: number;
-  user: number;
-  service: string;
-  modality: "VIRTUAL" | "PRESENCIAL"; 
-  is_priority: boolean;
-  ticket_number: string;
-  status: string;
-  created_at: string;
-  updated_at: string;
-  user_username?: string;
-  status_display?: string;
-  modality_display?: string;
-}
 
-export interface JwtPayload {
-  token_type?: string; 
-  exp?: number;        
-  iat?: number;        
-  jti?: string;      
-  id: number;          
-  cedula: number;      
-  nombre: string;
-  role: 'actor' | 'worker' | 'user';
-}

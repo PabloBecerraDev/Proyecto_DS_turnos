@@ -10,10 +10,6 @@
      ```sh
      entornos\.venv\Scripts\activate
      ```
-   - En Linux:
-     ```sh
-     source entornos/.venv/bin/activate
-     ```      
 3. **Instalar dependencias**:
    ```sh
    pip install -r local.txt
