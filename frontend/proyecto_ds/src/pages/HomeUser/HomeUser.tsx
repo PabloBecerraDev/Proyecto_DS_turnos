@@ -36,7 +36,7 @@ const ProfilePage = () => {
 
       {/* Sección de menú de opciones */}
       <div className="menu">
-        <div className="card" onClick={() => navigate('/turns')}>
+        <div className="card" onClick={() => navigate('/solicitar-turno')}>
           <h3>Solicitar Nuevo Turno</h3>
           <p>Accede para solicitar un turno en el sistema.</p>
         </div>
@@ -44,7 +44,7 @@ const ProfilePage = () => {
           <h3>Ver Historial de Tickets</h3>
           <p>Consulta el estado de tus tickets anteriores.</p>
         </div>
-        <div className="card" onClick={() => navigate('/profile')}>
+        <div className="card" onClick={() => navigate('/personal-data')}>
           <h3>Mis Datos</h3>
           <p>Gestiona y edita tus datos personales.</p>
         </div>
