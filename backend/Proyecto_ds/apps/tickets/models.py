@@ -1,13 +1,11 @@
+# backend/Proyecto_ds/apps/tickets/models.py
+
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 class Ticket(models.Model):
-    """
-    Representa un ticket de turno solicitado por un usuario (Actor).
-    El servicio puede ser uno predefinido o uno personalizado.
-    """
-
+    # --- Choices Existentes (Status) ---
     class TicketStatus(models.TextChoices):
         PENDIENTE = 'PENDIENTE', _('Pendiente')
         LLAMADO = 'LLAMADO', _('Llamado')
@@ -15,18 +13,31 @@ class Ticket(models.Model):
         CANCELADO = 'CANCELADO', _('Cancelado')
         NO_ASISTIO = 'NO_ASISTIO', _('No Asistió')
 
+    # --- NUEVAS CHOICES PARA MODALIDAD ---
+    class ModalityType(models.TextChoices):
+        VIRTUAL = 'VIRTUAL', _('Virtual')
+        PRESENCIAL = 'PRESENCIAL', _('Presencial')
+    # -----------------------------------
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='tickets',
         verbose_name=_('Usuario Solicitante')
     )
-
+    # El campo 'service' almacenará el código del servicio predefinido o el texto del servicio personalizado.
     service = models.CharField(
-        max_length=200,
+        max_length=200, # Longitud suficiente para servicios personalizados
         verbose_name=_('Servicio Solicitado')
     )
-
+    # --- NUEVO CAMPO MODALIDAD ---
+    modality = models.CharField(
+        max_length=20,
+        choices=ModalityType.choices,
+        default=ModalityType.PRESENCIAL, # O define un default que tenga más sentido para ti
+        verbose_name=_('Modalidad del Servicio')
+    )
+    # -----------------------------
     is_priority = models.BooleanField(
         default=False,
         verbose_name=_('Es Prioritario')
@@ -39,7 +50,7 @@ class Ticket(models.Model):
     )
     status = models.CharField(
         max_length=20,
-        choices=TicketStatus.choices, 
+        choices=TicketStatus.choices,
         default=TicketStatus.PENDIENTE,
         verbose_name=_('Estado del Ticket')
     )
@@ -52,7 +63,7 @@ class Ticket(models.Model):
         verbose_name=_('Última Actualización')
     )
 
-    
+    # --- Métodos (sin cambios aquí) ---
     def _generate_ticket_number(self):
         prefix = 'P-' if self.is_priority else 'N-'
         last_ticket = Ticket.objects.filter(ticket_number__startswith=prefix).order_by('id').last()
@@ -75,15 +86,11 @@ class Ticket(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        try:
-            user_display = self.user.get_full_name() if self.user.get_full_name() else self.user.get_username()
-        except AttributeError:
-             user_display = str(self.user_id)
-
+        user_display = self.user.get_full_name() or self.user.get_username()
         priority_flag = "[Prioritario]" if self.is_priority else "[Normal]"
-
         service_display = self.service
-        return f"Ticket {self.ticket_number or 'SIN NÚMERO'} ({service_display}) {priority_flag} - {user_display}"
+        modality_display = self.get_modality_display() # Para mostrar el label de la modalidad
+        return f"Ticket {self.ticket_number or '?'} ({service_display} - {modality_display}) {priority_flag} - {user_display}"
 
     class Meta:
         verbose_name = _('Ticket')
