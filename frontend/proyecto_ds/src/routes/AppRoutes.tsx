@@ -9,9 +9,6 @@ import ProfilePage from "@/pages/HomeUser/HomeUser";
 import RequestTicketPage from "@/pages/RequestTicket/RequestTicket";
 // import Logout from "@/api/Logout";
 
-
-
-
 const AppRoutes = () => {
     return (
         <BrowserRouter>

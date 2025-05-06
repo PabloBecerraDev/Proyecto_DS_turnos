@@ -37,19 +37,19 @@ export type ActorResponse = {
   };
 
 export interface TicketRequestData {
-  service: string; // Solo el servicio seleccionado o escrito
+  service: string; 
 }
 
 export interface TicketResponseData {
   id: number;
-  user: number; // ID del usuario que solicitó
+  user: number; 
   service: string;
-  is_priority: boolean; // Prioridad determinada por el backend
-  ticket_number: string; // El número de ticket generado (Ej: "N-001")
-  status: string; // El estado inicial (Ej: "PENDIENTE")
-  created_at: string; // Fecha ISO 8601
-  updated_at: string; // Fecha ISO 8601
-  user_username?: string; // El nombre de usuario (cedula) - Opcional si se añadió al serializer
-  status_display?: string; // El nombre legible del estado - Opcional si se añadió al serializer
+  is_priority: boolean; 
+  ticket_number: string; 
+  status: string; 
+  created_at: string; 
+  updated_at: string; 
+  user_username?: string; 
+  status_display?: string; 
 }
 
