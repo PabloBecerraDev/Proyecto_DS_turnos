@@ -52,3 +52,13 @@ export interface TicketResponseData {
   status_display?: string; 
 }
 
+export interface JwtPayload {
+  token_type?: string; 
+  exp?: number;        
+  iat?: number;        
+  jti?: string;      
+  id: number;          
+  cedula: number;      
+  nombre: string;
+  role: 'actor' | 'worker' | 'user';
+}

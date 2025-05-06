@@ -49,11 +49,12 @@ const LoginForm = () => {
       password: password,
     };
 
-    try {
+   try {
       await LoginUser(payload);
-        navigate("/home-user");
+      navigate("/home-user")
     } catch (err: any) {
       console.error("Detalle del error:", err);
+
       if (err.response?.status === 400) {
         toast.error("Las credenciales no coinciden.");
       } else if (err.response?.status === 500) {
@@ -61,6 +62,7 @@ const LoginForm = () => {
       } else {
         toast.error("No se pudo conectar con el servidor.");
       }
+    } finally {
       setLoading(false);
     } 
   }

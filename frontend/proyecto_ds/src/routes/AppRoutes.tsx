@@ -33,7 +33,7 @@ const AppRoutes = () => {
                 <Route
                     path="/solicitar-turno"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute role="worker">
                             <RequestTicketPage />
                         </ProtectedRoute>
                     }
