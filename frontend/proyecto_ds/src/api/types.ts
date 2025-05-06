@@ -15,7 +15,6 @@ export type CreateUserWorkerResponse = {
     code: string;
 }
 
-
 export interface ActorPayload {
     nombre: string;
     cedula: number;

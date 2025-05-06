@@ -51,7 +51,7 @@ const LoginForm = () => {
 
     try {
       await LoginUser(payload);
-        navigate("/self");
+        navigate("/home-user");
     } catch (err: any) {
       console.error("Detalle del error:", err);
       if (err.response?.status === 400) {
@@ -98,7 +98,7 @@ const LoginForm = () => {
             <p
             className="text-sm mt-3 text-neutral-500 text-left"
             >
-              logeate para acceder a la fila virtual.
+              Inicia sesión para acceder a Q-manager.
             </p>
 
             {error && (
