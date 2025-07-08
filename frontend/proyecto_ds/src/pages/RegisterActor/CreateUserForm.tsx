@@ -1,9 +1,10 @@
-import imgRegister from '@/assets/imagenCreateUser.png';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { ActorPayload} from '@/api/types';
 import { useState } from 'react';
 import CreateUserActor from '@/api/CreateClient';
 import { ToastContainer, toast } from 'react-toastify';
+import imagenLogin from "@/assets/formsImage.png";
+
 
 
 
@@ -40,7 +41,9 @@ const CreateUserForm = () => {
 
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault() //se usa para evitar qu ela pagina se recargue 
+
+      e.preventDefault() 
+
       if (!nombre || !cedula || !telefono || !email || !contraseña) {
         toast.error("Por favor complete todos los campos.");
         return;
@@ -51,7 +54,7 @@ const CreateUserForm = () => {
         return;
       }
     
-      if (cedula.length > 10) {
+      if (cedula.trim().length > 10 || cedula.trim().length < 7) {
         toast.error("La cédula debe tener maximo 10 dígitos numéricos");
         return;
       }
@@ -60,8 +63,13 @@ const CreateUserForm = () => {
         toast.error("La contraseña debe tener al menos 6 caracteres");
         return;
       }
+
+
+      if (telefono.trim().length < 10 || telefono.trim().length > 15){
+        toast.error("El teléfono debe tener entre 10 y 15 dígitos.");
+        return;
+      }
     
-      // (Opcional) Validar prioridad si es requerida
       if (isPriority && !prioridadTipo) {
         toast.error("Debe seleccionar un motivo de prioridad");
         return;
@@ -78,6 +86,7 @@ const CreateUserForm = () => {
         ? (prioridadTipo !== "" ? prioridadTipo as "A" | "B" | "C" | "D" : undefined)
         : undefined,
       };
+      console.log(payload)
 
       try {
         const response = await CreateUserActor(payload);
@@ -142,7 +151,7 @@ const CreateUserForm = () => {
           <div
           className="sm:block hidden w-[45%] h-full"
           >
-            <img src={imgRegister} alt="" className="w-3/4 h-full rounded-2xl"/>
+            <img src={imagenLogin} alt="" className="w-3/4 h-full rounded-2xl"/>
           </div>
         )}
         
@@ -219,10 +228,10 @@ const CreateUserForm = () => {
               
               >
                 <option value="">Seleccione una opción</option>
-                <option value="A">Mujer embarazada</option>
-                <option value="B">Persona en muletas</option>
-                <option value="C">Tercera edad</option>
-                <option value="D">Otro caso...</option>
+                <option value="A">Adulto de tercera edad</option>
+                <option value="B">Mujer embarazada</option>
+                <option value="C">Persona en silla de ruedas o muletas.</option>
+                <option value="D">Otros</option>
               </select>
             )}
 
@@ -239,7 +248,7 @@ const CreateUserForm = () => {
                   type={showPassword ? "text" : "password"}  
                   name="password" 
                   value={contraseña}
-
+                  onChange={(e)=> setContraseña(e.target.value)}
                 />
                 
                 

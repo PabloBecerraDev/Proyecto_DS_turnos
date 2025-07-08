@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoutes";
 import PersonalData from "@/pages/PersonalData/PersonalData";
 import ProfilePage from "@/pages/HomeUser/HomeUser";
+import ProfilePageWorker from "@/pages/HomeWorker/HomeWorker";
+
 // import Logout from "@/api/Logout";
 
 
@@ -17,15 +19,49 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/" element= {<HomePage/>}></Route>
                 <Route path="/login" element= {<LoginForm/>}></Route>
-                <Route path="/personal-data" element= {<PersonalData/>}></Route>
-                <Route path="/home-user" element= {<ProfilePage/>}></Route>
-                {/* <Route path="/logout" element= {<Logout/>}></Route> */}
-                {/* <Route path="/register" element= {<CreateUserForm/>}></Route> */}
+                {/* <Route path="/home-user" element= {<ProfilePage/>}></Route> */}
+
+                <Route
+                    path="/profile"
+                    element={
+                    <ProtectedRoute role="worker">
+                        <PersonalData/>
+                    </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/profile-actor"
+                    element={
+                    <ProtectedRoute role="actor">
+                        <PersonalData/>
+                    </ProtectedRoute>
+                    }
+                />
+
                 <Route
                     path="/register"
                     element={
                     <ProtectedRoute role="worker">
                         <CreateUserForm/>
+                    </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/home-worker"
+                    element={
+                    <ProtectedRoute role="worker">
+                        <ProfilePageWorker/>
+                    </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/home-user"
+                    element={
+                    <ProtectedRoute role="actor">
+                        <ProfilePage/>
                     </ProtectedRoute>
                     }
                 />

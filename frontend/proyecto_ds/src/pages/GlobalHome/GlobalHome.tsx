@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useEffect, useState } from "react";
+import FooterComponent from "@/components/footer/footerPage";
+
 
 
 export default function HomePage() {
@@ -68,6 +70,9 @@ export default function HomePage() {
         </div>
 
       </div>
+
     </section>
+
+    
   );
 }

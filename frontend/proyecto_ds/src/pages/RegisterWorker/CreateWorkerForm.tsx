@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import imgRegister from '@/assets/imagenCreateUser.png';
 import { ToastContainer, toast } from 'react-toastify';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import {CreateUserWorkerPayload} from '@/api/types';
 import CreateUserWorker from '@/api/CreateUserWorker';
+import ImageRegister from "@/assets/formsImage.png";
+
 
 
 function generarContraseña(longitud: number): string {
@@ -46,6 +47,12 @@ const CreateWorkerForm = () => {
 
         if (nombre.trim().length < 3) {
             toast.error("El nombre debe tener al menos 3 caracteres");
+            return;
+        }
+
+
+        if (telefono.trim().length < 10 || telefono.trim().length > 15) {
+            toast.error("El teléfono debe tener entre 10 y 15 dígitos.");
             return;
         }
         
@@ -106,7 +113,7 @@ const CreateWorkerForm = () => {
             <div
             className=" flex w-[45%] h-[100%] justify-center items-center "
             >
-                <img src={imgRegister} alt="" className="w-[420px] h-[638px] rounded-2xl "/>
+                <img src={ImageRegister} alt="" className="w-[420px] h-[638px] rounded-2xl "/>
             </div>
             )}
             
