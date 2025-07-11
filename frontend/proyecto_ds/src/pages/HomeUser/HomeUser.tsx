@@ -65,23 +65,42 @@ const ProfilePage = () => {
       </div>
 
 
-      {/* mosaico 2 */}
-      <div className="relative max-lg:row-start-1">
-        <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-4xl"></div>
-        <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
-          <p>anunciooo</p>
-        </div>
-        <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5 max-lg:rounded-t-4xl"></div>
-      </div>
+      {/* mosaico 2 - Anuncio Superior */}
+          <div className="relative max-lg:row-start-1">
+            <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-4xl"></div>
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
+              <div className="p-4 h-full flex items-center justify-center min-h-[240px]">
+                <iframe
+                  src="https://adds-0nfk.onrender.com/api/anuncio/?tema=viajes&ancho=300&alto=200"
+                  width="100%"
+                  height="200"
+                  style={{ border: 'none', maxWidth: '300px' }}
+                  title="Anuncio Superior"
+                  className="rounded-lg shadow-sm"
+                />
+              </div>
+            </div>
+            <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5 max-lg:rounded-t-4xl"></div>
+          </div>
 
-      {/* mosaico 3 */}
-      <div className="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
-        <div className="absolute inset-px rounded-lg bg-white"></div>
-        <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
-          <p>anuncioooo 2</p>
-        </div>
-        <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5"></div>
-      </div>
+          {/* mosaico 3 - Anuncio Inferior */}
+          <div className="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
+            <div className="absolute inset-px rounded-lg bg-white"></div>
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
+              <div className="p-4 h-full flex items-center justify-center min-h-[220px]">
+                <iframe
+                  src="https://adds-0nfk.onrender.com/api/anuncio/?tema=viajes&ancho=300&alto=180"
+                  width="100%"
+                  height="180"
+                  style={{ border: 'none', maxWidth: '300px' }}
+                  title="Anuncio Inferior"
+                  className="rounded-lg shadow-sm"
+                />
+              </div>
+            </div>
+            <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5"></div>
+          </div>
+
 
 
 
