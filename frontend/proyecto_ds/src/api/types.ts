@@ -38,3 +38,32 @@ export type ActorResponse = {
 
 
 
+export interface BaseUser {
+    id: number;
+    nombre: string;
+    cedula: number;
+    email: string;
+    phone_number: string;
+}
+
+export interface Actor extends BaseUser {
+    has_priority: boolean;
+    motive: 'A' | 'B' | 'C' | 'D' | null;
+}
+
+export interface Worker extends BaseUser {
+    code: string;
+}
+
+
+export type UserType = BaseUser | Actor | Worker;
+
+
+export interface EmailTypePayload  {
+    email: string;
+    cedula: string;
+    password: string;
+} 
+
+
+

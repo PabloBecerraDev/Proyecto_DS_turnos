@@ -18,6 +18,8 @@ const LoginForm = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [cedula, setCedula] = useState("")
   const [password, setPassword] = useState("")
+  const [ , setUser] = useState<any>(null);
+
 
   const navigate = useNavigate()
 
@@ -51,7 +53,19 @@ const LoginForm = () => {
 
     try {
       await LoginUser(payload);
-        navigate("/self");
+      const storedUser = localStorage.getItem("usuario");
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser); // esto está bien, pero no se usa para navegar
+        if (parsedUser.role === "actor") {
+          navigate("/home-user");
+        } else if (parsedUser.role === "worker") {
+          navigate("/home-worker");
+        } else {
+          navigate("/");
+        }
+      }
+      
     } catch (err: any) {
       console.error("Detalle del error:", err);
       if (err.response?.status === 400) {

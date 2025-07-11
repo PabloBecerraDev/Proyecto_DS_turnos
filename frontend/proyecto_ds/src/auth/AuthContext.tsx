@@ -2,7 +2,7 @@
 
 import {createContext, useState, useEffect, useContext, ReactNode} from "react"
 import  api  from "@/api/axios"
-
+  
 // Interfaz para el contexto de autenticación
 interface AuthContextType {
   user: { token: string } | null

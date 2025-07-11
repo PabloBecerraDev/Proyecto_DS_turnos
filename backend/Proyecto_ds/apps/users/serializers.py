@@ -57,6 +57,8 @@ class ActorSerializer(serializers.ModelSerializer):
         else:
             motive = validated_data.pop('motive', None)
         
+        print(validated_data['password'])
+
         user = User.objects.create_user(
             cedula=validated_data['cedula'],
             password=validated_data['password'],
@@ -135,18 +137,18 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         token['id'] = user.id
-        token['cedula'] = user.cedula
-        token['nombre'] = user.nombre
+        # token['cedula'] = user.cedula
+        # token['nombre'] = user.nombre
 
         # la idea con esto es la siguiente una vez que alguien se loguee 
         # en el token tambien ira la informacion de que rol cumple el user 
         # logueado esto para protejer las rutas en el frontend
-        if hasattr(user, 'actor'):
-            token['role'] = 'actor'
-        elif hasattr(user, 'worker'):
-            token['role'] = 'worker'
-        else:
-            token['role'] = 'user'
+        # if hasattr(user, 'actor'):
+        #     token['role'] = 'actor'
+        # elif hasattr(user, 'worker'):
+        #     token['role'] = 'worker'
+        # else:
+        #     token['role'] = 'user'
         
 
         return token
@@ -154,6 +156,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         cedula = attrs.get("cedula")
         password = attrs.get("password")
+        print("esta es la contraseña: " + password)
 
         try:
             user = User.objects.get(cedula=cedula)
@@ -169,3 +172,46 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         })
 
         return data
+    
+
+class GetUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'nombre', 'cedula', 'email', 'phone_number']
+
+class GetActorSerializer(UserSerializer):
+    class Meta(UserSerializer.Meta):
+        model = Actor
+        fields = GetUserSerializer.Meta.fields + ['has_priority', 'motive']
+
+class GetWorkerSerializer(UserSerializer):
+    class Meta(UserSerializer.Meta):
+        model = Worker
+        fields = GetUserSerializer.Meta.fields + ['code']
+
+
+def get_user_instance_and_serializer(user_id):
+    try:
+        actor = Actor.objects.get(id=user_id)
+        return actor, GetActorSerializer
+    except Actor.DoesNotExist:
+        pass
+
+    try:
+        worker = Worker.objects.get(id=user_id)
+        return worker, GetWorkerSerializer
+    except Worker.DoesNotExist:
+        pass
+
+    try:
+        user = User.objects.get(id=user_id)
+        return user, GetUserSerializer
+    except User.DoesNotExist:
+        return None, None
+    
+
+# serializador encargado de manejar los datos que se enviaran por correo
+class SendEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    cedula = serializers.CharField()
+    password = serializers.CharField()
