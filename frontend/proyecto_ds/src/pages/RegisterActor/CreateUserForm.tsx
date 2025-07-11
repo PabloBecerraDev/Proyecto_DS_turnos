@@ -4,6 +4,8 @@ import { useState } from 'react';
 import CreateUserActor from '@/api/CreateClient';
 import { ToastContainer, toast } from 'react-toastify';
 import imagenLogin from "@/assets/formsImage.png";
+import SendEmail from '@/api/EnviarEmail';
+import {EmailTypePayload} from '@/api/types'
 
 
 
@@ -86,12 +88,28 @@ const CreateUserForm = () => {
         ? (prioridadTipo !== "" ? prioridadTipo as "A" | "B" | "C" | "D" : undefined)
         : undefined,
       };
+
+
+      const payloadEmail:EmailTypePayload ={
+        email:email,
+        cedula:cedula,
+        password:contraseña
+      }
+
       console.log(payload)
 
       try {
         const response = await CreateUserActor(payload);
         console.log("Usuario creado exitosamente:", response);
         toast.success("Usuario creado con exito.");
+
+        try{
+          const responseEmail = await SendEmail(payloadEmail);
+          console.log(responseEmail)
+        }catch (error){
+          console.error("Error al crear el usuario:", error);
+          alert("Ocurrió un error al crear el usuario. Revisa los campos o intenta más tarde.");
+        }
         
         //Limpiar campos
         setNombre("");

@@ -38,7 +38,7 @@ export type ActorResponse = {
 
 
 
-  export interface BaseUser {
+export interface BaseUser {
     id: number;
     nombre: string;
     cedula: number;
@@ -57,6 +57,13 @@ export interface Worker extends BaseUser {
 
 
 export type UserType = BaseUser | Actor | Worker;
+
+
+export interface EmailTypePayload  {
+    email: string;
+    cedula: string;
+    password: string;
+} 
 
 
 
